@@ -1,5 +1,5 @@
 module FBLPromises {
-    umbrella header "FBLPromises.h"
+    umbrella header "FBLPromises2.h"
 
     header "FBLPromise.h"
     header "FBLPromiseError.h"

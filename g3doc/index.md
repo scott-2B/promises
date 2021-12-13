@@ -414,7 +414,7 @@ In your `Package.swift` file, add `Promises` dependency to corresponding targets
 let package = Package(
   // ...
   dependencies: [
-    .package(url: "https://github.com/google/promises.git", from: "2.0.0"),
+    .package(url: "https://github.com/google/promises.git", from: "1.2.0"),
   ],
   // ...
 )
@@ -1212,9 +1212,9 @@ any( any(p1, p2), any(p3, p4)).then { results in
 }
 ```
 
-### AwaitPromise
+### Await
 
-Using `awaitPromise` you can synchronously wait for a promise to get resolved
+Using `await` you can synchronously wait for a promise to get resolved
 on a different thread. That can be useful for situations when you need
 to mix several results from multiple async routines differently, i.e.
 cannot chain them in a clear pipeline using [`then`](#then),
@@ -1224,12 +1224,12 @@ Swift:
 
 ```swift
 Promise<Int> {
-  let minusFive = try awaitPromise(calculator.negate(5))
-  let twentyFive = try awaitPromise(calculator.multiply(minusFive, minusFive))
-  let twenty = try awaitPromise(calculator.add(twentyFive, minusFive))
-  let five = try awaitPromise(calculator.subtract(twentyFive, twenty))
-  let zero = try awaitPromise(calculator.add(minusFive, five))
-  return try awaitPromise(calculator.multiply(zero, five))
+  let minusFive = try await(calculator.negate(5))
+  let twentyFive = try await(calculator.multiply(minusFive, minusFive))
+  let twenty = try await(calculator.add(twentyFive, minusFive))
+  let five = try await(calculator.subtract(twentyFive, twenty))
+  let zero = try await(calculator.add(minusFive, five))
+  return try await(calculator.multiply(zero, five))
 }.then { result in
   // ...
 }.catch { error in
@@ -1265,14 +1265,14 @@ Objective-C
 Note: In the above examples it's assumed that all calculator routines are
 executed asynchronously on a background thread, because the promise work block
 is dispatched on a [default queue](#default-dispatch-queue) since no other is
-specified, and so any blocking `awaitPromise` would cause a deadlock if it waited for
+specified, and so any blocking `await` would cause a deadlock if it waited for
 a promise that was going to be resolved on the default queue as well. Generally,
-it's usually safer to use `awaitPromise` from a global concurrent queue only to avoid
+it's usually safer to use `await` from a global concurrent queue only to avoid
 any potential deadlocks. Like so:
 
 ```swift
 Promise<Int>(on: .global()) {
-  try awaitPromise(object.someAsyncRoutine())
+  try await(object.someAsyncRoutine())
 }
 ```
 

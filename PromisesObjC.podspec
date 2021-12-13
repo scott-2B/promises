@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name        = 'PromisesObjC'
-  s.version     = '2.0.0'
+  s.version     = '1.2.13'
   s.authors     = 'Google Inc.'
   s.license     = { :type => 'Apache', :file => 'LICENSE' }
   s.homepage    = 'https://github.com/google/promises'
-  s.source      = { :git => 'https://github.com/google/promises.git', :tag => s.version }
+  s.source      = { :git => 'https://github.com/scott-2B/promises.git', :tag => s.version }
   s.summary     = 'Synchronization construct for Objective-C'
   s.description = <<-DESC
 
